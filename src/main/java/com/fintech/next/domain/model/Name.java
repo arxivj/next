@@ -48,7 +48,7 @@ public class Name { // Outer class
     /* @Builder 끝 */
 
     public String getFullName(){
-        return String.format("%s %s", this.first,this.last);
+        return String.format("%s%s", this.last,this.first);
     }
 
 }

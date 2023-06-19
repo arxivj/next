@@ -30,15 +30,26 @@ public class Member {
     })
     private Name name;
 
-    public Member(Email email, Name name){
+    private String password;
+
+    private String salt;
+
+    public Member(Email email, Name name, String password, String salt){
         this.email = email;
         this.name = name;
+        this.password = password;
+        this.salt = salt;
     }
 
     /* @Builder 구현 */
     public static class MemberBuilder{
         private Email email;
         private Name name;
+
+        private String password;
+
+        private String salt;
+
         public MemberBuilder email(Email email){
             this.email = email;
             return this;
@@ -47,7 +58,15 @@ public class Member {
             this.name = name;
             return this;
         }
-    public Member build(){return new Member(email,name);}
+        public MemberBuilder password(String password){
+            this.password = password;
+            return this;
+        }
+        public MemberBuilder salt(String salt){
+            this.salt = salt;
+            return this;
+        }
+    public Member build(){return new Member(email,name,password,salt);}
     }
     public static MemberBuilder builder(){return new MemberBuilder();}
     /* @Builder 끝 */

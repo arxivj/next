@@ -9,7 +9,7 @@
 <body>
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
-        <form method="post" class="join" id="join">
+        <form method="post" class="form" id="form">
             <h2>Sign Up</h2>
             <br>
             <label for="first">first</label>
@@ -23,9 +23,9 @@
             <br>
             <input id="email" type="email" name="email">
             <br>
-            <!--            <label for="password">Password</label>-->
+            <label for="password">Password</label>
             <br>
-            <!--            <input id="password" type="password" name="password">-->
+            <input id="password" type="password" name="password">
             <br>
             <input id="button" type="submit" value="Submit">
             <br>
@@ -35,42 +35,38 @@
 </section>
 <!--<script th:src="@{/login/js/join.js}"></script>-->
 <script>
-    document.getElementById('join')
-        .addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const memberDto = {
-                email: document.getElementById('email').value,
-                name: {
-                    first: document.getElementById('first').value,
-                    last: document.getElementById('last').value
-                }
+    document.getElementById('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const signUpDto = {
+            email: formData.get('email'),
+            name: {
+                first: formData.get('first'),
+                last: formData.get('last')
+            },
+            password: formData.get('password')
         }
-
-            fetch('/members', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(memberDto)
-            })
-                .then(response => {
-                    if (response.ok) {
-                      return response.json();
-                    } else {
-                        console.log("응답 오류")
-                        alert(`Response Status: ${response.status}`);
-                    }
-                })
-                .then(data => {
-                    console.log("email : "+data.email.value);
-                    console.log("name : "+data.name.fullName);
-                    // window.location.href = "/signin";
-                })
-                .catch(error => {
-                    console.log("전송 오류")
-                })
+        fetch('/members', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(signUpDto)
         })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log("응답 오류")
+                    alert(`Response Status: ${response.status}`);
+                }
+            })
+            .then(data => {
+                console.log("email : " + data.email.value);
+                console.log("name : " + data.name.fullName);
+                // window.location.href = "/signin";
+            })
+    })
 
 </script>
 </body>

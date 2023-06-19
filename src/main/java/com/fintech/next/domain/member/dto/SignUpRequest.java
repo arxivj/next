@@ -1,6 +1,5 @@
 package com.fintech.next.domain.member.dto;
 
-
 import com.fintech.next.domain.member.domain.Member;
 import com.fintech.next.domain.model.Email;
 import com.fintech.next.domain.model.Name;
@@ -20,14 +19,18 @@ public class SignUpRequest {
     @Valid
     private Name name;
 
-    SignUpRequest(@Valid Email email, @Valid Name name){
+    private String password;
+
+    SignUpRequest(@Valid Email email, @Valid Name name, String password){
         this.email = email;
         this.name = name;
+        this.password = password;
     }
     public Member toEntity(){
         return Member.builder()
                 .name(name)
                 .email(email)
+                .password(password)
                 .build();
     }
 
