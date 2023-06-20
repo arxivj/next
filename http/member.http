@@ -1,5 +1,4 @@
-
-POST localhost:8080/members
+POST localhost:8080/members/signup
 Content-Type: application/json
 
 {
@@ -9,4 +8,12 @@ Content-Type: application/json
         "last": "Doe"
     },
     "password": "password123"
+}
+###
+POST localhost:8080/members/signin
+Content-Type: application/json
+
+{
+"email": "example@example.com",
+"password": "password123"
 }

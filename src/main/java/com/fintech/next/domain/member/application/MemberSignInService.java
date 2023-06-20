@@ -14,8 +14,6 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class MemberSignInService {
-
-//    public void tokenCheck(Email email, HttpServ)
     private final MemberFindDao memberFindDao;
     public MemberSignInService(MemberFindDao memberFindDao) {
         this.memberFindDao = memberFindDao;

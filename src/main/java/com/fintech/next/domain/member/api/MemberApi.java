@@ -25,6 +25,14 @@ public class MemberApi {
         this.memberFindDao = memberFindDao;
     }
 
+    @PostMapping("/signin")
+    public ResponseEntity<Member> login(@RequestBody @Valid final SignInRequest dto){
+        return ResponseEntity.ok(memberSignInService.doSignIn(dto));
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+//        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<Member> signup(@RequestBody @Valid final SignUpRequest dto){
         return ResponseEntity.ok(memberSignUpService.doSignUp(dto));
@@ -35,9 +43,6 @@ public class MemberApi {
         return new MemberResponse(memberFindDao.findById(id));
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<Member> login(@RequestBody @Valid final SignInRequest dto){
-        return ResponseEntity.ok(memberSignInService.doSignIn(dto));
-    }
+
 
 }
