@@ -19,7 +19,8 @@ public class Member {
     private Long id;
 
     @Embedded //@Embeddable과의 관계를 생각!
-    @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false, unique = true, updatable = false, length = 50))
+    @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false,
+            unique = true, updatable = false, length = 50))
     private Email email;
 
 

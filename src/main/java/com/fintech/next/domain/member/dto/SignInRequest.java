@@ -1,7 +1,6 @@
 package com.fintech.next.domain.member.dto;
 
 import com.fintech.next.domain.model.Email;
-import com.fintech.next.domain.model.Name;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

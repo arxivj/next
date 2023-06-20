@@ -15,25 +15,19 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/members")
 public class MemberApi {
-
     private final MemberSignUpService memberSignUpService;
     private final MemberSignInService memberSignInService;
     private final MemberFindDao memberFindDao;
 
-    @GetMapping("/api")
-    public ResponseEntity<String> hello(){
-        return ResponseEntity.ok("Hello");
-    }
     public MemberApi(MemberSignUpService memberSignUpService, MemberSignInService memberSignInService, MemberFindDao memberFindDao){
         this.memberSignUpService = memberSignUpService;
         this.memberSignInService = memberSignInService;
         this.memberFindDao = memberFindDao;
     }
 
-    @PostMapping
-    public MemberResponse create(@RequestBody @Valid final SignUpRequest dto){
-        final Member member = memberSignUpService.doSignUp(dto);
-        return new MemberResponse(member);
+    @PostMapping("/signup")
+    public ResponseEntity<Member> signup(@RequestBody @Valid final SignUpRequest dto){
+        return ResponseEntity.ok(memberSignUpService.doSignUp(dto));
     }
 
     @GetMapping("/{id}")
@@ -41,9 +35,9 @@ public class MemberApi {
         return new MemberResponse(memberFindDao.findById(id));
     }
 
-//    @PostMapping("/signup")
-//    public MemberResponse login(@RequestBody @Valid final SignInRequest dto){
-//        final Member member = memberSignInService
-//    }
+    @PostMapping("/signin")
+    public ResponseEntity<Member> login(@RequestBody @Valid final SignInRequest dto){
+        return ResponseEntity.ok(memberSignInService.doSignIn(dto));
+    }
 
 }
