@@ -19,7 +19,7 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
-                        <form method="post" class="signin" id="signin" action="">
+                        <form method="post" class="signin" id="signin">
                             <div class="mb-md-5 mt-md-4 pb-5">
                                 <br>
                                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
@@ -55,8 +55,9 @@
                         </form>
 
                         <div>
-                            <p class="mb-0">Don't have an account? <a href="/signup"
-                                                                      class="text-white-50 fw-bold" id="next">Sign Up</a>
+                            <p class="mb-0">Don't have an account? <a href="/members/signup"
+                                                                      class="text-white-50 fw-bold" id="next">Sign
+                                Up</a>
                             </p>
                         </div>
                     </div>
@@ -69,7 +70,34 @@
     <br>
 </section>
 
+<script>
+    document.getElementById('signin').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const signInDto = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        }
+        fetch('http://localhost:8080/members/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(signInDto)
+        })
+            .then(response => {
+                if (response.ok) {
+                    const authorization = response.headers.get('Authorization');
+                    localStorage.setItem("refreshToken", authorization.split(' ')[1]);
+                    localStorage.setItem("accessToken", JSON.parse(atob(authorization.split('.')[1]))['Authorization'].split(' ')[1]);
+                } else {
+                    console.log("응답 오류")
+                    alert(`Response Status: ${response.status}`);
+                }
+            })
+    })
 
+</script>
 
 <!--<script th:src="@{/js/signin.js}"></script>-->
 </body>

@@ -7,6 +7,9 @@ import com.fintech.next.domain.member.domain.Member;
 import com.fintech.next.domain.member.dto.MemberResponse;
 import com.fintech.next.domain.member.dto.SignInRequest;
 import com.fintech.next.domain.member.dto.SignUpRequest;
+import com.fintech.next.global.util.JwtDto;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +29,9 @@ public class MemberApi {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Member> login(@RequestBody @Valid final SignInRequest dto){
-        return ResponseEntity.ok(memberSignInService.doSignIn(dto));
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody @Valid final SignInRequest dto){
+        HttpHeaders httpHeaders = memberSignInService.doSignIn(dto);
+        return new ResponseEntity<>("Sign in successfully!", httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
