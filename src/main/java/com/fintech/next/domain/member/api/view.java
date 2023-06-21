@@ -6,19 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class view {
 
-    @GetMapping("/signin")
+    @GetMapping("/members/signin")
     public String signIn(){
         return "/member/signin";
     }
 
-    @GetMapping("/signup")
+    @GetMapping("members/signup")
     public String signUp(){
         return "/member/signup";
-    }
-
-    @GetMapping("/members/signin")
-    public String create(){
-        return "/member/signin";
     }
 
 }
