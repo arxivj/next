@@ -46,7 +46,7 @@
             },
             password: formData.get('password')
         }
-        fetch('/members', {
+        fetch('http://localhost:8080/members/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@
             .then(data => {
                 console.log("email : " + data.email.value);
                 console.log("name : " + data.name.fullName);
-                // window.location.href = "/signin";
+                window.location.href = "/signin";
             })
     })
 
