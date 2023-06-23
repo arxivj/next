@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -29,8 +30,8 @@ public class MemberApi {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> login(@RequestBody @Valid final SignInRequest dto){
-        HttpHeaders httpHeaders = memberSignInService.doSignIn(dto);
+    public ResponseEntity<String> login(@RequestBody @Valid final SignInRequest dto, HttpServletResponse response){
+        HttpHeaders httpHeaders = memberSignInService.doSignIn(dto, response);
         return new ResponseEntity<>("Sign in successfully!", httpHeaders, HttpStatus.OK);
     }
 

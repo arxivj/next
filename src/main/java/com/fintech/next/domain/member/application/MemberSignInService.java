@@ -5,14 +5,12 @@ import com.fintech.next.domain.member.domain.Member;
 import com.fintech.next.domain.member.dto.SignInRequest;
 import com.fintech.next.domain.member.exception.InvalidPasswordsException;
 import com.fintech.next.domain.model.Email;
-import com.fintech.next.global.util.JwtDto;
-import com.fintech.next.global.util.JwtProperties;
-import com.fintech.next.global.util.JwtUtil;
-import com.fintech.next.global.util.PasswordEncoder;
+import com.fintech.next.global.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 @Slf4j
@@ -26,7 +24,7 @@ public class MemberSignInService {
     }
 
 
-    public HttpHeaders doSignIn(final SignInRequest dto) {
+    public HttpHeaders doSignIn(final SignInRequest dto,HttpServletResponse response) {
         Email email = dto.getEmail();
         Member member = memberFindDao.findByEmail(email);
         String enteredPassword = dto.getPassword();
@@ -36,11 +34,22 @@ public class MemberSignInService {
         if (!password.equals(hashPassword)) {
             throw new InvalidPasswordsException();
         }
-        //TODO: 로그인시 JWT 토큰을 헤더가 아닌 쿠키에 담아 전송하는 방식으로 변경
-        String token = JwtUtil.createRefreshToken(member, email);
+        String accessToken = JwtUtil.createAccessToken(member, email);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+token);
+        httpHeaders.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+accessToken);
+        String refreshToken = JwtUtil.createRefreshToken(member, email);
+        CookieUtil.generateRefreshTokenCookie(response, refreshToken);
         return httpHeaders;
     }
+
+
+    public void getCookie(Email email, HttpServletResponse response){
+        Member member = memberFindDao.findByEmail(email);
+
+
+    }
+
+
+
 
 }

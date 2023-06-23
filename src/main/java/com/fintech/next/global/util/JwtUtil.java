@@ -24,10 +24,10 @@ public class JwtUtil {
     public static String createRefreshToken(Member member, Email email){
         log.info("# Check access to 'createRefreshToken' logic ");
         return JWT.create()
-                .withSubject(member.getName().getFullName())
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+                .withSubject(member.getEmail().toString())
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME_REFRESH))
                 .withClaim("email",email.getValue())
-                .withClaim(JwtProperties.HEADER_STRING,JwtProperties.TOKEN_PREFIX+JwtUtil.createAccessToken(member, email))
+                .withClaim("secret","actually no big deal")
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
     }
 
