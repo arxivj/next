@@ -30,10 +30,12 @@ public class MemberSignInService {
         String salt = member.getSalt();
         String hashPassword = PasswordEncoder.hashPassword(enteredPassword, salt);
         String password = member.getPassword();
-
         if (!password.equals(hashPassword)) {
             throw new InvalidPasswordsException();
         }
+        //TODO: HandlerInterceptor에 리턴타입 boolean으로 검증
+        //TODO: + redis에 저장된 refreshToken은 Client IP or Payload의 문자열 등을 통해 검증
+//        JwtUtil.validateAccessToken(response.getHeader(JwtProperties.HEADER_STRING));
 
         String accessToken = JwtUtil.createAccessToken(member, email);
         JwtUtil.accessTokenSetHeader(response, accessToken);

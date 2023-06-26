@@ -22,7 +22,7 @@ public class JwtUtil {
 
     @Value("${jwt.secret-key}")
     public String secretKey;
-    private static String key;
+    private static String key; // class 로딩시 key=null 초기화 > JwtUtil instance 생성 후 @Value 주입 > init으로 key할당
 
     @PostConstruct
     public void init() {
