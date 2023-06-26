@@ -35,7 +35,8 @@ public class MemberSignUpService {
                 .password(password)
                 .salt(salt)
                 .build();
+    //TODO: 회원가입시 SMTP 이메일 인증
+
         return memberRepository.save(member);
     }
-    //TODO: 회원가입시 SMTP 이메일 인증
 }

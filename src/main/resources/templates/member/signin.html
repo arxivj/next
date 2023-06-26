@@ -56,8 +56,7 @@
 
                         <div>
                             <p class="mb-0">Don't have an account? <a href="/members/signup"
-                                                                      class="text-white-50 fw-bold" id="next">Sign
-                                Up</a>
+                                                                      class="text-white-50 fw-bold" id="next">Sign Up</a>
                             </p>
                         </div>
                     </div>
@@ -87,9 +86,23 @@
         })
             .then(response => {
                 if (response.ok) {
-                    const authorization = response.headers.get('Authorization');
-                    localStorage.setItem("refreshToken", authorization.split(' ')[1]);
-                    localStorage.setItem("accessToken", JSON.parse(atob(authorization.split('.')[1]))['Authorization'].split(' ')[1]);
+                    const authorization =response.headers.get('Authorization');
+                    const accessToken = authorization.split(' ')[1];
+                    localStorage.setItem("accessToken",accessToken);
+
+                    // const authorization =response.headers.get('Authorization');
+                    // const refreshToken = authorization.split(' ')[1];
+                    // localStorage.setItem("refreshToken",refreshToken);
+                    // const base64Payload = authorization.split('.')[1];
+                    // const payload = atob(base64Payload);
+                    // const result = JSON.parse(payload);
+                    // const authorization2 =result['Authorization'];
+                    // const accessToken = authorization2.split(' ')[1];
+                    // localStorage.setItem("accessToken",accessToken);
+
+                    // const authorization = response.headers.get('Authorization');
+                    // localStorage.setItem("refreshToken", authorization.split(' ')[1]);
+                    // localStorage.setItem("accessToken", JSON.parse(atob(authorization.split('.')[1]))['Authorization'].split(' ')[1]);
                 } else {
                     console.log("응답 오류")
                     alert(`Response Status: ${response.status}`);
